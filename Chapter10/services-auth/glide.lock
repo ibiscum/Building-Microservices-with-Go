@@ -1,0 +1,30 @@
+hash: b82a691d14ac7407435dd088c4d9a79f33e9776db2a62ce24bb8d27e1b50ccda
+updated: 2017-06-11T13:25:28.151937629+01:00
+imports:
+- name: github.com/building-microservices-with-go/crypto
+  version: bd514fa657a3cc17f9fdac30f0f49fb40f79a91e
+- name: github.com/DataDog/datadog-go
+  version: 0ddda6bee21174ef6c4873647cb0d6ec9cba996f
+  subpackages:
+  - statsd
+- name: github.com/go-playground/locales
+  version: 1e5f1161c6416a5ff48840eb8724a394e48cc534
+  subpackages:
+  - currency
+- name: github.com/go-playground/universal-translator
+  version: a29831bde2603d919f793d6e133f50e26a55c6c9
+- name: github.com/SermoDigital/jose
+  version: f6df55f235c24f236d11dbcf665249a59ac2021f
+  subpackages:
+  - crypto
+  - jws
+  - jwt
+- name: github.com/sirupsen/logrus
+  version: 202f25545ea4cf9b191ff7f846df5d87c9382c2b
+- name: golang.org/x/sys
+  version: e24f485414aeafb646f6fca458b0bf869c0880a1
+  subpackages:
+  - unix
+- name: gopkg.in/go-playground/validator.v9
+  version: 6d8c18553ea1ac493d049edd6f102f52e618f085
+testImports: []
