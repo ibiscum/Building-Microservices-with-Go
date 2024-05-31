@@ -8,10 +8,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/ibiscum/Building-Microservices-in-Go/chapter06/vanilla_http/entities"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
-	"github.com/nicholasjackson/building-microservices-in-go/chapter6/vanilla_http/entities"
 )
 
 func main() {
