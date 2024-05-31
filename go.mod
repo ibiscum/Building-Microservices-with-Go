@@ -4,8 +4,8 @@ go 1.22.1
 
 require (
 	github.com/nicholasjackson/bench v1.0.2
-	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
-	golang.org/x/net v0.6.0
+	golang.org/x/crypto v0.17.0
+	golang.org/x/net v0.10.0
 )
 
 require (
@@ -26,6 +26,6 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
 	golang.org/x/image v0.10.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 	labix.org/v2/mgo v0.0.0-20140701140051-000000000287
 )
