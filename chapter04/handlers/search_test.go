@@ -3,6 +3,7 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -49,7 +50,10 @@ func TestSearchHandlerReturnsKittensWithValidQuery(t *testing.T) {
 	handler.ServeHTTP(rw, r)
 
 	response := searchResponse{}
-	json.Unmarshal(rw.Body.Bytes(), &response)
+	err := json.Unmarshal(rw.Body.Bytes(), &response)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	assert.Equal(t, 1, len(response.Kittens))
 	assert.Equal(t, http.StatusOK, rw.Code)

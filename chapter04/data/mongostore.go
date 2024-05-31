@@ -1,6 +1,10 @@
 package data
 
-import "labix.org/v2/mgo"
+import (
+	"log"
+
+	"labix.org/v2/mgo"
+)
 
 // MongoStore is a MongoDB data store which implements the Store interface
 type MongoStore struct {
@@ -37,7 +41,10 @@ func (m *MongoStore) DeleteAllKittens() {
 	s := m.session.Clone()
 	defer s.Close()
 
-	s.DB("kittenserver").C("kittens").DropCollection()
+	err := s.DB("kittenserver").C("kittens").DropCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // InsertKittens inserts a slice of kittens into the datastore
@@ -46,5 +53,8 @@ func (m *MongoStore) InsertKittens(kittens []Kitten) {
 	s := m.session.Clone()
 	defer s.Close()
 
-	s.DB("kittenserver").C("kittens").Insert(kittens)
+	err := s.DB("kittenserver").C("kittens").Insert(kittens)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

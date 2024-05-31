@@ -62,20 +62,20 @@ func iShouldReceiveAListOfKittens() error {
 	return nil
 }
 
-func FeatureContext(s *godog.Suite) {
+func FeatureContext(s *godog.ScenarioContext) {
 	s.Step(`^I have no search criteria$`, iHaveNoSearchCriteria)
 	s.Step(`^I call the search endpoint$`, iCallTheSearchEndpoint)
 	s.Step(`^I should receive a bad request message$`, iShouldReceiveABadRequestMessage)
 	s.Step(`^I have a valid search criteria$`, iHaveAValidSearchCriteria)
 	s.Step(`^I should receive a list of kittens$`, iShouldReceiveAListOfKittens)
 
-	s.BeforeScenario(func(interface{}) {
+	s.Before(func(interface{}) {
 		clearDB()
 		setupData()
 		startServer()
 	})
 
-	s.AfterScenario(func(interface{}, error) {
+	s.After(func(interface{}, error) {
 		server.Process.Signal(syscall.SIGINT)
 	})
 

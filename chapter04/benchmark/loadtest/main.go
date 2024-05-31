@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -53,7 +54,10 @@ func Request() error {
 		return err
 	}
 
-	io.Copy(io.Discard, resp.Body)
+	_, err = io.Copy(io.Discard, resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {

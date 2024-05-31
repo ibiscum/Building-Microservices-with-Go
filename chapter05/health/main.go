@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -21,7 +22,10 @@ func main() {
 	http.HandleFunc("/", mainHandler)
 	http.HandleFunc("/health", healthHandler)
 
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func mainHandler(rw http.ResponseWriter, r *http.Request) {
@@ -35,7 +39,8 @@ func mainHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	fmt.Fprintf(rw, "Average request time: %f (ms)\n", ma.Value()/1000000)
 
-	duration := time.Now().Sub(startTime)
+	duration := time.Since(startTime)
+
 	ma.Add(float64(duration))
 }
 

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/ibiscum/Building-Microservices-with-Go/chapter04/data"
@@ -35,5 +36,8 @@ func (s *Search) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	kittens := s.DataStore.Search(request.Query)
 
 	encoder := json.NewEncoder(rw)
-	encoder.Encode(searchResponse{Kittens: kittens})
+	err = encoder.Encode(searchResponse{Kittens: kittens})
+	if err != nil {
+		log.Fatal(err)
+	}
 }

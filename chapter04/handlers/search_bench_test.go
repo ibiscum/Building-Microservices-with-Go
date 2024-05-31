@@ -11,7 +11,7 @@ import (
 func BenchmarkSearchHandler(b *testing.B) {
 	mockStore = &data.MockStore{}
 	mockStore.On("Search", "Fat Freddy's Cat").Return([]data.Kitten{
-		data.Kitten{
+		{
 			Name: "Fat Freddy's Cat",
 		},
 	})
