@@ -8,7 +8,7 @@ import (
 	"time"
 
 	memdb "github.com/hashicorp/go-memdb"
-	"github.com/nats-io/nats"
+	"github.com/nats-io/nats.go"
 )
 
 type productInsertedEvent struct {
@@ -42,10 +42,10 @@ func init() {
 
 	schema = &memdb.DBSchema{
 		Tables: map[string]*memdb.TableSchema{
-			"product": &memdb.TableSchema{
+			"product": {
 				Name: "product",
 				Indexes: map[string]*memdb.IndexSchema{
-					"id": &memdb.IndexSchema{
+					"id": {
 						Name:    "id",
 						Unique:  true,
 						Indexer: &memdb.StringFieldIndex{Field: "SKU"},
@@ -73,10 +73,13 @@ func init() {
 
 func main() {
 	log.Println("Subscribing to events")
-	natsClient.Subscribe("product.inserted", func(m *nats.Msg) {
+	_, err := natsClient.Subscribe("product.inserted", func(m *nats.Msg) {
 		log.Println("New event")
 		productMessage(m)
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	http.DefaultServeMux.HandleFunc("/product", getProducts)
 
@@ -106,7 +109,10 @@ func getProducts(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	encoder := json.NewEncoder(rw)
-	encoder.Encode(products)
+	err = encoder.Encode(products)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func productMessage(m *nats.Msg) {

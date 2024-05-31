@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 
 	memdb "github.com/hashicorp/go-memdb"
-	nats "github.com/nats-io/nats"
+	nats "github.com/nats-io/nats.go"
 )
 
 type product struct {
@@ -29,10 +29,10 @@ func init() {
 
 	schema = &memdb.DBSchema{
 		Tables: map[string]*memdb.TableSchema{
-			"product": &memdb.TableSchema{
+			"product": {
 				Name: "product",
 				Indexes: map[string]*memdb.IndexSchema{
-					"id": &memdb.IndexSchema{
+					"id": {
 						Name:    "id",
 						Unique:  true,
 						Indexer: &memdb.StringFieldIndex{Field: "SKU"},
@@ -107,7 +107,7 @@ func insertProduct(rw http.ResponseWriter, r *http.Request) {
 
 	p := &product{}
 
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 	if err != nil {
 		rw.WriteHeader(http.StatusBadRequest)
 		return
@@ -129,5 +129,8 @@ func insertProduct(rw http.ResponseWriter, r *http.Request) {
 	}
 	txn.Commit()
 
-	natsClient.Publish("product.inserted", data)
+	err = natsClient.Publish("product.inserted", data)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

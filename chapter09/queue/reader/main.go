@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/nicholasjackson/building-microservices-in-go/chapter9/queue"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter09/queue"
 )
 
 func main() {

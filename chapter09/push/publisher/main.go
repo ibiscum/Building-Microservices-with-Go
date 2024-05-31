@@ -2,20 +2,20 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 
-	"github.com/nats-io/nats"
+	"github.com/nats-io/nats.go"
 )
 
 var natsServer = flag.String("nats", "", "NATS server URI")
 var natsClient *nats.Conn
 
-type product struct {
-	Name string `json:"name"`
-	SKU  string `json:"sku"`
-}
+// type product struct {
+// 	Name string `json:"name"`
+// 	SKU  string `json:"sku"`
+// }
 
 func init() {
 	flag.Parse()
@@ -44,12 +44,15 @@ func productsHandler(rw http.ResponseWriter, r *http.Request) {
 func insertProduct(rw http.ResponseWriter, r *http.Request) {
 	log.Println("/insert handler called")
 
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 	if err != nil {
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	defer r.Body.Close()
 
-	natsClient.Publish("product.inserted", data)
+	err = natsClient.Publish("product.inserted", data)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

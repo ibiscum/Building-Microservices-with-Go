@@ -1,11 +1,11 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 
-	"github.com/nicholasjackson/building-microservices-in-go/chapter9/queue"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter09/queue"
 )
 
 type Product struct {
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-		data, _ := ioutil.ReadAll(r.Body)
+		data, _ := io.ReadAll(r.Body)
 		err := q.Add("new.product", data)
 		if err != nil {
 			log.Println(err)
@@ -29,5 +29,8 @@ func main() {
 		}
 	})
 
-	http.ListenAndServe(":8080", http.DefaultServeMux)
+	err = http.ListenAndServe(":8000", http.DefaultServeMux)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

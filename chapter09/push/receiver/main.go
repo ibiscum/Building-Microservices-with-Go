@@ -5,7 +5,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/nats-io/nats"
+	"github.com/nats-io/nats.go"
 )
 
 type product struct {
@@ -31,7 +31,10 @@ func main() {
 	defer natsClient.Close()
 
 	log.Println("Subscribing to events")
-	natsClient.Subscribe("product.inserted", handleMessage)
+	_, err = natsClient.Subscribe("product.inserted", handleMessage)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func handleMessage(m *nats.Msg) {
