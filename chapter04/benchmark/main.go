@@ -44,7 +44,10 @@ func main() {
 				log.Fatal(err)
 			}
 			runtime.GC()
-			pprof.WriteHeapProfile(f)
+			err = pprof.WriteHeapProfile(f)
+			if err != nil {
+				log.Fatal(err)
+			}
 			defer f.Close()
 		}
 		if *cpuprofile != "" {
@@ -88,17 +91,17 @@ func clearDB() {
 func setupData() {
 	store.InsertKittens(
 		[]data.Kitten{
-			data.Kitten{
+			{
 				Id:     "1",
 				Name:   "Felix",
 				Weight: 12.3,
 			},
-			data.Kitten{
+			{
 				Id:     "2",
 				Name:   "Fat Freddy's Cat",
 				Weight: 20.0,
 			},
-			data.Kitten{
+			{
 				Id:     "3",
 				Name:   "Garfield",
 				Weight: 35.0,

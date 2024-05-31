@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/DATA-DOG/godog"
+	"github.com/cucumber/godog"
 	"github.com/ibiscum/Building-Microservices-with-Go/chapter04/data"
 )
 

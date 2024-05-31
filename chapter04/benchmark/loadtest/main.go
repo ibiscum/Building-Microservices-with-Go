@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -26,7 +25,7 @@ func main() {
 		Timeout: 5 * time.Second,
 	}
 
-	b := bench.New(10, 30*time.Second, 15*time.Second, 5*time.Second)
+	b := bench.New(true, 10, 30*time.Second, 15*time.Second, 5*time.Second)
 	b.AddOutput(0*time.Second, os.Stdout, output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./output.txt"), output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./error.txt"), output.WriteErrorLogs)
@@ -43,6 +42,9 @@ func Request() error {
 		"POST",
 		serverURI,
 		bytes.NewBuffer([]byte(`{"query":"Fat Freddy's Cat"}`)))
+	if err != nil {
+		return err
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
@@ -51,11 +53,11 @@ func Request() error {
 		return err
 	}
 
-	io.Copy(ioutil.Discard, resp.Body)
+	io.Copy(io.Discard, resp.Body)
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed with status: %v", resp.Status)
+		return fmt.Errorf("failed with status: %v", resp.Status)
 	}
 
 	return nil

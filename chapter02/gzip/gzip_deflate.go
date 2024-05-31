@@ -30,7 +30,10 @@ func helloWorldHandler(rw http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello " + name}
 
 	encoder := json.NewEncoder(rw)
-	encoder.Encode(response)
+	err := encoder.Encode(response)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func NewGzipHandler(next http.Handler) http.Handler {
