@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"time"
 
-	validator "gopkg.in/go-playground/validator.v9"
+	validator "github.com/go-playground/validator"
 
 	"github.com/DataDog/datadog-go/statsd"
 	"github.com/SermoDigital/jose/crypto"
 	"github.com/SermoDigital/jose/jws"
-	bogcrypto "github.com/building-microservices-with-go/crypto"
+	bogcrypto "github.com/ibiscum/Building-Microservices-with-Go/crypto"
 
 	log "github.com/sirupsen/logrus"
 )

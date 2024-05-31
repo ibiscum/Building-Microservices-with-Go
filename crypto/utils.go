@@ -7,7 +7,6 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -28,7 +27,7 @@ func UnmarshalRSAPublicKeyFromFile(file string) (*rsa.PublicKey, error) {
 
 	pub, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to parse public key: %s", err)
+		return nil, fmt.Errorf("unable to parse public key: %s", err)
 	}
 
 	return pub.(*rsa.PublicKey), nil
@@ -44,7 +43,7 @@ func UnmarshalRSAPrivateKeyFromFile(file string) (*rsa.PrivateKey, error) {
 
 	priv, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to parse private key: %s", err)
+		return nil, fmt.Errorf("unable to parse private key: %s", err)
 	}
 
 	return priv, nil
@@ -54,18 +53,18 @@ func readFileToBlock(file string, blockType string) (*pem.Block, error) {
 
 	f, err := os.Open(file)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to open keyfile: %s", err)
+		return nil, fmt.Errorf("unable to open keyfile: %s", err)
 	}
 	defer f.Close()
 
-	bytes, err := ioutil.ReadAll(f)
+	bytes, err := io.ReadAll(f)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to read data from file: %s", err)
+		return nil, fmt.Errorf("unable to read data from file: %s", err)
 	}
 
 	block, _ := pem.Decode(bytes)
 	if block == nil && block.Type != blockType {
-		return nil, fmt.Errorf("Unable to decode public key")
+		return nil, fmt.Errorf("unable to decode public key")
 	}
 
 	return block, nil

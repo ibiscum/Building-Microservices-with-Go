@@ -6,8 +6,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/SermoDigital/jose/crypto"
-	"github.com/SermoDigital/jose/jws"
+	"github.com/go-jose/go-jose/v4/jwt"
+
+	"github.com/go-jose/go-jose/v4"
 	bgocrypto "github.com/ibiscum/Building-Microservices-with-Go/crypto"
 )
 
@@ -29,28 +30,48 @@ func init() {
 
 // GenerateJWT creates a new JWT and signs it with the private key
 func GenerateJWT() []byte {
-	claims := jws.Claims{}
-	claims.SetExpiration(time.Now().Add(2880 * time.Minute))
-	claims.Set("userID", "abcsd232jfjf")
-	claims.Set("accessLevel", "user")
+	sig, err := jose.NewSigner(jose.SigningKey{Algorithm: jose.RS256, Key: rsaPrivate}, (&jose.SignerOptions{}).WithType("JWT"))
+	if err != nil {
+		fmt.Printf("making signer: %s\n", err)
 
-	jwt := jws.NewJWT(claims, crypto.SigningMethodRS256)
+	}
 
-	b, _ := jwt.Serialize(rsaPrivate)
+	cl := jwt.Claims{
+		Subject:   "subject",
+		Issuer:    "issuer",
+		NotBefore: jwt.NewNumericDate(time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC)),
+		Audience:  jwt.Audience{"leela", "fry"},
+	}
 
-	return b
+	raw, err := jwt.Signed(sig).Claims(cl).Serialize()
+	if err != nil {
+		fmt.Printf("signing JWT: %s\n", err)
+	}
+
+	// claims := jws.Claims{}
+	// claims.SetExpiration(time.Now().Add(2880 * time.Minute))
+	// claims.Set("userID", "abcsd232jfjf")
+	// claims.Set("accessLevel", "user")
+
+	// jwt := jws.NewJWT(claims, crypto.SigningMethodRS256)
+
+	// b, _ := jwt.Serialize(rsaPrivate)
+
+	return []byte(raw)
 }
 
 // ValidateJWT validates that the given slice is a valid JWT and the signature matches
 // the public key
 func ValidateJWT(token []byte) error {
-	jwt, err := jws.ParseJWT(token)
+	raw := string(token)
+	tok, err := jwt.ParseSigned(raw, []jose.SignatureAlgorithm{jose.RS256})
 	if err != nil {
-		return fmt.Errorf("Unable to parse token: %v", err)
+		return fmt.Errorf("unable to parse token: %v", err)
 	}
 
-	if err = jwt.Validate(rsaPublic, crypto.SigningMethodRS256); err != nil {
-		return fmt.Errorf("Unable to validate token: %v", err)
+	out := jwt.Claims{}
+	if err := tok.Claims(rsaPublic, &out); err != nil {
+		return fmt.Errorf("unable to validate token: %v", err)
 	}
 
 	return nil

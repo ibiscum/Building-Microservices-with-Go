@@ -5,11 +5,11 @@ import (
 	"os"
 
 	"github.com/DataDog/datadog-go/statsd"
-	"github.com/building-microservices-with-go/chapter10-services-auth/handlers"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter10/services-auth/handlers"
 	log "github.com/sirupsen/logrus"
 )
 
-const address = ":8080"
+const address = ":8000"
 
 func main() {
 	var logger = &log.Logger{

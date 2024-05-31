@@ -9,6 +9,7 @@ require (
 )
 
 require (
+	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/adjust/uniuri v0.0.0-20130923163420-498743145e60 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cucumber/gherkin/go/v26 v26.2.0 // indirect
@@ -33,7 +34,7 @@ require (
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	golang.org/x/term v0.20.0 // indirect
@@ -47,6 +48,7 @@ require (
 )
 
 require (
+	github.com/DataDog/datadog-go v4.8.3+incompatible
 	github.com/SermoDigital/jose v0.9.1
 	github.com/VividCortex/ewma v1.2.0
 	github.com/adjust/rmq v1.0.0
@@ -55,6 +57,7 @@ require (
 	github.com/cucumber/godog v0.14.1
 	github.com/eapache/go-resiliency v1.6.0
 	github.com/fatih/color v1.17.0 // indirect
+	github.com/go-jose/go-jose/v4 v4.0.2
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/glog v1.2.1
