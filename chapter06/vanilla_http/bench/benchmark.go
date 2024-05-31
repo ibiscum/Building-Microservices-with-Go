@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/ibiscum/Building-Microservices-in-Go/chapter06/vanilla_http/entities"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter06/vanilla_http/entities"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
@@ -17,7 +18,7 @@ import (
 func main() {
 	fmt.Println("Benchmarking application")
 
-	b := bench.New(400, 300*time.Second, 90*time.Second, 5*time.Second)
+	b := bench.New(true, 400, 300*time.Second, 90*time.Second, 5*time.Second)
 	b.AddOutput(301*time.Second, os.Stdout, output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./output.txt"), output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./error.txt"), output.WriteErrorLogs)
@@ -35,6 +36,9 @@ func GoMicroRequest() error {
 	data, _ := json.Marshal(request)
 
 	req, err := http.NewRequest("GET", "http://www.public.b.prod-eu-west-1.noths.com", bytes.NewBuffer(data))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	client := &http.Client{
 		Transport: &http.Transport{

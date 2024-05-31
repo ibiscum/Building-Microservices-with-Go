@@ -15,7 +15,7 @@ import (
 func main() {
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		rw.Header().Set("Content-Type", "text/plain")
-		fmt.Fprint(rw, "Hello World")
+		fmt.Fprint(rw, "Hello world")
 	})
 
 	err := http.ListenAndServeTLS(":8433", "../generate_keys/instance_cert.pem", "../generate_keys/instance_key.pem", nil)

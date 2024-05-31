@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/alexcesaro/statsd"
-	"github.com/building-microservices-with-go/chapter7/server/entities"
-	"github.com/building-microservices-with-go/chapter7/server/httputil"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter07/server/entities"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter07/server/httputil"
 	"github.com/sirupsen/logrus"
 )
 
@@ -34,7 +34,7 @@ func (h *helloWorldHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	h.statsd.Increment(helloworldSuccess)
 
-	message := httputil.SerialzableRequest{r}
+	message := httputil.SerialzableRequest{Request: r}
 	h.logger.WithFields(logrus.Fields{
 		"handler": "HelloWorld",
 		"status":  http.StatusOK,

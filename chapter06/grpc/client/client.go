@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"log"
 
-	proto "github.com/nicholasjackson/building-microservices-in-go/chapter6/grpc/proto"
+	proto "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto"
 	context "golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	conn, err := grpc.Dial("127.0.0.1:9000", grpc.WithInsecure())
+	conn, err := grpc.NewClient("127.0.0.1:9000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal("Unable to create connection to server: ", err)
 	}

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/building-microservices-with-go/chapter8/symmetric"
-	"github.com/building-microservices-with-go/crypto"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter08/symmetric"
+	"github.com/ibiscum/Building-Microservices-with-Go/crypto"
 )
 
 var rsaPublic *rsa.PublicKey
@@ -47,7 +47,7 @@ func EncryptMessageWithPublicKey(message string) (string, error) {
 	maxLength := modulus - (hashLength * 2) - 2
 
 	if len(message) > maxLength {
-		return "", fmt.Errorf("The maximum message size must not exceed: %d", maxLength)
+		return "", fmt.Errorf("the maximum message size must not exceed: %d", maxLength)
 	}
 
 	data, err := EncryptDataWithPublicKey([]byte(message))
@@ -91,7 +91,7 @@ func EncryptLargeMessageWithPublicKey(message string) (ciphertext string, cipher
 func DecryptLargeMessageWithPrivateKey(message, key string) (string, error) {
 	keystring, err := DecryptMessageWithPrivateKey(key)
 	if err != nil {
-		return "", fmt.Errorf("Unable to decrypt key with private key: %s", err)
+		return "", fmt.Errorf("unable to decrypt key with private key: %s", err)
 	}
 
 	messageData, err := base64.StdEncoding.DecodeString(message)

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/building-microservices-with-go/crypto"
+	"github.com/ibiscum/Building-Microservices-with-Go/crypto"
 )
 
 // Hash is a structure which is capable of generating and comparing sha512

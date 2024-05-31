@@ -8,7 +8,7 @@ import (
 
 	"github.com/SermoDigital/jose/crypto"
 	"github.com/SermoDigital/jose/jws"
-	bgocrypto "github.com/building-microservices-with-go/crypto"
+	bgocrypto "github.com/ibiscum/Building-Microservices-with-Go/crypto"
 )
 
 var rsaPrivate *rsa.PrivateKey

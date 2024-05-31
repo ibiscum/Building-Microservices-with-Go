@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/building-microservices-with-go/chapter8/validation"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter08/validation"
 )
 
 var (
@@ -61,7 +61,7 @@ func (ln MyListener) Close() error {
 }
 
 func (ln MyListener) Addr() net.Addr {
-	return &net.TCPAddr{net.IP{127, 0, 0, 1}, 49706, ""}
+	return &net.TCPAddr{IP: net.IP{127, 0, 0, 1}, Port: 49706, Zone: ""}
 }
 
 type MyConn struct {
@@ -90,11 +90,11 @@ func (c *MyConn) Close() error {
 }
 
 func (c *MyConn) LocalAddr() net.Addr {
-	return &net.TCPAddr{net.IP{127, 0, 0, 1}, 49706, ""}
+	return &net.TCPAddr{IP: net.IP{127, 0, 0, 1}, Port: 49706, Zone: ""}
 }
 
 func (c *MyConn) RemoteAddr() net.Addr {
-	return &net.TCPAddr{net.IP{127, 0, 0, 1}, 49706, ""}
+	return &net.TCPAddr{IP: net.IP{127, 0, 0, 1}, Port: 49706, Zone: ""}
 }
 
 func (c *MyConn) SetDeadline(t time.Time) error {

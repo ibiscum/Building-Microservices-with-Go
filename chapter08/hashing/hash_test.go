@@ -152,7 +152,7 @@ func TestSomething(t *testing.T) {
 	hash, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
 	hash2, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
 
-	if bytes.Compare(hash, hash2) != 0 {
+	if !bytes.Equal(hash, hash2) {
 		fmt.Printf("%x\n", hash)
 		fmt.Printf("%x\n", hash2)
 		t.Fail()

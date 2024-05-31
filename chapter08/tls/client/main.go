@@ -4,15 +4,16 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 	roots := x509.NewCertPool()
 
-	rootCert, err := ioutil.ReadFile("../generate_keys/root_cert.pem")
+	rootCert, err := os.ReadFile("../generate_keys/root_cert.pem")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -22,7 +23,7 @@ func main() {
 		panic("failed to parse root certificate")
 	}
 
-	applicationCert, err := ioutil.ReadFile("../generate_keys/application_cert.pem")
+	applicationCert, err := os.ReadFile("../generate_keys/application_cert.pem")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +43,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	defer resp.Body.Close()
 	if err != nil {
 		log.Fatal(err)

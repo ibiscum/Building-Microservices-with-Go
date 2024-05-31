@@ -5,9 +5,9 @@ import (
 	"flag"
 
 	log "github.com/golang/glog"
+	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
 	"github.com/micro/go-micro/cmd"
 	"github.com/micro/go-micro/server"
-	kittens "github.com/nicholasjackson/building-microservices-in-go/chapter6/gomicro/proto"
 )
 
 type Kittens struct{}

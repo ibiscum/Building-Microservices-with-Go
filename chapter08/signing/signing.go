@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 
-	bgocrypto "github.com/building-microservices-with-go/crypto"
+	bgocrypto "github.com/ibiscum/Building-Microservices-with-Go/crypto"
 )
 
 var rsaPublic *rsa.PublicKey

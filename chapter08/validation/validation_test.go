@@ -3,7 +3,7 @@ package validation
 import (
 	"testing"
 
-	"gopkg.in/go-playground/validator.v9"
+	"github.com/go-playground/validator"
 )
 
 func TestErrorWhenRequestEmailNotPresent(t *testing.T) {

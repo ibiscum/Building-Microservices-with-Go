@@ -10,7 +10,7 @@ import (
 
 	"github.com/alexcesaro/statsd"
 	"github.com/bshuster-repo/logrus-logstash-hook"
-	"github.com/building-microservices-with-go/chapter7/server/handlers"
+	"github.com/ibiscum/Building-Microservices-with-Go/chapter07/server/handlers"
 	"github.com/sirupsen/logrus"
 )
 

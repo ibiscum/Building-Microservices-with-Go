@@ -9,7 +9,7 @@ import (
 	"net/http"
 
 	memdb "github.com/hashicorp/go-memdb"
-	nats "github.com/nats-io/go-nats"
+	nats "github.com/nats-io/nats"
 )
 
 type product struct {

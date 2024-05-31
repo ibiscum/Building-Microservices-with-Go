@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	validator "gopkg.in/go-playground/validator.v9"
+	validator "github.com/go-playground/validator"
 )
 
 // Request defines the input structure received by a http handler

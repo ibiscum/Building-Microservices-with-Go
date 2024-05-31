@@ -17,7 +17,7 @@ import (
 func main() {
 	fmt.Println("Benchmarking application")
 
-	b := bench.New(400, 300*time.Second, 90*time.Second, 5*time.Second)
+	b := bench.New(true, 400, 300*time.Second, 90*time.Second, 5*time.Second)
 	b.AddOutput(301*time.Second, os.Stdout, output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./output.txt"), output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./error.txt"), output.WriteErrorLogs)
@@ -35,6 +35,9 @@ func GoMicroRequest() error {
 	data, _ := json.Marshal(request)
 
 	req, err := http.NewRequest("GET", "http://www.public.b.prod-eu-west-1.noths.com", bytes.NewBuffer(data))
+	if err != nil {
+		return err
+	}
 
 	client := &http.Client{
 		Transport: &http.Transport{
@@ -51,7 +54,7 @@ func GoMicroRequest() error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed with status: %v", resp.Status)
+		return fmt.Errorf("failed with status: %v", resp.Status)
 	}
 
 	return nil
