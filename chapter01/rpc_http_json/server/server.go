@@ -32,14 +32,20 @@ func (h *HelloWorldHandler) HelloWorld(args *contract.HelloWorldRequest, reply *
 
 func StartServer() {
 	helloWorld := new(HelloWorldHandler)
-	rpc.Register(helloWorld)
+	err := rpc.Register(helloWorld)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Unable to listen on given port: %s", err))
+		log.Fatalf(fmt.Sprintf("Unable to listen on given port: %s", err))
 	}
 
-	http.Serve(l, http.HandlerFunc(httpHandler))
+	err = http.Serve(l, http.HandlerFunc(httpHandler))
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {

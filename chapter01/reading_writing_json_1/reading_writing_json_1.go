@@ -12,7 +12,7 @@ type helloWorldResponse struct {
 }
 
 func main() {
-	port := 8080
+	port := 8000
 
 	http.HandleFunc("/helloworld", helloWorldHandler)
 
@@ -21,10 +21,10 @@ func main() {
 }
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
-	response := helloWorldResponse{Message: "Hello World"}
+	response := helloWorldResponse{Message: "Hello world"}
 	data, err := json.Marshal(response)
 	if err != nil {
-		panic("Ooops")
+		panic(err)
 	}
 
 	fmt.Fprint(w, string(data))

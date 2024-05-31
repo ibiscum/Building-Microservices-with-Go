@@ -12,7 +12,7 @@ func BenchmarkHelloWorldHandler(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		r, _ := http.Post(
-			"http://localhost:8080/helloworld",
+			"http://localhost:8000/helloworld",
 			"application/json",
 			bytes.NewBuffer([]byte(`{"Name":"World"}`)),
 		)

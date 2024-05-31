@@ -57,5 +57,8 @@ func (h helloWorldHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello"}
 
 	encoder := json.NewEncoder(rw)
-	encoder.Encode(response)
+	err := encoder.Encode(response)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

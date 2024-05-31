@@ -11,18 +11,21 @@ import (
 
 const port = 1234
 
-func main() {
-	log.Printf("Server starting on port %v\n", port)
-	StartServer()
-}
+// func main() {
+// 	log.Printf("Server starting on port %v\n", port)
+// 	StartServer()
+// }
 
 func StartServer() {
 	helloWorld := &HelloWorldHandler{}
-	rpc.Register(helloWorld)
+	err := rpc.Register(helloWorld)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Unable to listen on given port: %s", err))
+		log.Fatalf(fmt.Sprintf("Unable to listen on given port: %s", err))
 	}
 	defer l.Close()
 

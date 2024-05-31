@@ -3,6 +3,7 @@ package client
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/ibiscum/Building-Microservices-with-Go/chapter01/rpc_http_json/contract"
@@ -18,7 +19,10 @@ func PerformRequest() contract.HelloWorldResponse {
 
 	decoder := json.NewDecoder(r.Body)
 	var response contract.HelloWorldResponse
-	decoder.Decode(&response)
+	err := decoder.Decode(&response)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return response
 }

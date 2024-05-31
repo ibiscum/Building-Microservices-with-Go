@@ -21,15 +21,21 @@ func (h *HelloWorldHandler) HelloWorld(args *contract.HelloWorldRequest, reply *
 
 func StartServer() {
 	helloWorld := &HelloWorldHandler{}
-	rpc.Register(helloWorld)
+	err := rpc.Register(helloWorld)
+	if err != nil {
+		log.Fatal(err)
+	}
 	rpc.HandleHTTP()
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Unable to listen on given port: %s", err))
+		log.Fatalf(fmt.Sprintf("Unable to listen on given port: %s", err))
 	}
 
 	log.Printf("Server starting on port %v\n", port)
 
-	http.Serve(l, nil)
+	err = http.Serve(l, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

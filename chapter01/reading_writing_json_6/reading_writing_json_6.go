@@ -42,5 +42,5 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello " + request.Name}
 
 	encoder := json.NewEncoder(w)
-	encoder.Encode(response)
+	log.Fatal(encoder.Encode(response))
 }

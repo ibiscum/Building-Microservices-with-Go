@@ -15,7 +15,7 @@ type helloWorldRequest struct {
 	Name string `json:"name"`
 }
 
-const port = 8080
+const port = 8000
 
 func main() {
 	server()
@@ -41,5 +41,8 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello " + request.Name}
 
 	encoder := json.NewEncoder(w)
-	encoder.Encode(response)
+	err = encoder.Encode(response)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

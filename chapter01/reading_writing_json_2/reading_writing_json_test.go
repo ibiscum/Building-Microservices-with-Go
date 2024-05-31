@@ -3,7 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
+	"log"
 	"testing"
 )
 
@@ -14,8 +15,8 @@ type Response struct {
 func BenchmarkHelloHandlerVariable(b *testing.B) {
 	b.ResetTimer()
 
-	var writer = ioutil.Discard
-	response := Response{Message: "Hello World"}
+	var writer = io.Discard
+	response := Response{Message: "Hello world"}
 
 	for i := 0; i < b.N; i++ {
 		data, _ := json.Marshal(response)
@@ -26,23 +27,29 @@ func BenchmarkHelloHandlerVariable(b *testing.B) {
 func BenchmarkHelloHandlerEncoder(b *testing.B) {
 	b.ResetTimer()
 
-	var writer = ioutil.Discard
-	response := Response{Message: "Hello World"}
+	var writer = io.Discard
+	response := Response{Message: "Hello world"}
 
 	for i := 0; i < b.N; i++ {
 		encoder := json.NewEncoder(writer)
-		encoder.Encode(response)
+		err := encoder.Encode(response)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
 func BenchmarkHelloHandlerEncoderReference(b *testing.B) {
 	b.ResetTimer()
 
-	var writer = ioutil.Discard
-	response := Response{Message: "Hello World"}
+	var writer = io.Discard
+	response := Response{Message: "Hello world"}
 
 	for i := 0; i < b.N; i++ {
 		encoder := json.NewEncoder(writer)
-		encoder.Encode(&response)
+		err := encoder.Encode(&response)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

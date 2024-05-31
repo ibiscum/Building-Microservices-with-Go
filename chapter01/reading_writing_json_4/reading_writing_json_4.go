@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -17,7 +17,7 @@ type helloWorldRequest struct {
 }
 
 func main() {
-	port := 8080
+	port := 8000
 
 	http.HandleFunc("/helloworld", helloWorldHandler)
 
@@ -27,7 +27,7 @@ func main() {
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Bad request", http.StatusBadRequest)
 		return
@@ -43,5 +43,8 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	response := helloWorldResponse{Message: "Hello " + request.Name}
 
 	encoder := json.NewEncoder(w)
-	encoder.Encode(response)
+	err = encoder.Encode(response)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
