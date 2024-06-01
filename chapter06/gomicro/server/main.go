@@ -6,8 +6,8 @@ import (
 
 	log "github.com/golang/glog"
 	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
-	"github.com/micro/go-micro/cmd"
-	"github.com/micro/go-micro/server"
+	"go-micro.dev/v4/server"
+	"go-micro.dev/v4/util/cmd"
 )
 
 type Kittens struct{}

@@ -9,13 +9,15 @@ import (
 
 	"google.golang.org/grpc"
 
-	proto "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto"
+	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto/kittens"
 )
 
-type kittenServer struct{}
+type kittenServer struct {
+	kittens.UnimplementedKittensServer
+}
 
-func (k *kittenServer) Hello(ctx context.Context, request *proto.Request) (*proto.Response, error) {
-	response := &proto.Response{}
+func (k *kittenServer) Hello(ctx context.Context, request *kittens.Request) (*kittens.Response, error) {
+	response := &kittens.Response{}
 	response.Msg = fmt.Sprintf("Hello %v", request.Name)
 
 	return response, nil
@@ -27,6 +29,6 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	proto.RegisterKittensServer(grpcServer, &kittenServer{})
+	kittens.RegisterKittensServer(grpcServer, &kittenServer{})
 	grpcServer.Serve(lis)
 }

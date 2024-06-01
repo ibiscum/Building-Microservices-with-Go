@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	proto "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto"
+	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto/kittens"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
@@ -22,7 +22,7 @@ func main() {
 
 	fmt.Println("Benchmarking application")
 
-	b := bench.New(true, 400, 300*time.Second, 90*time.Second, 5*time.Second)
+	b := bench.New(false, 100, 100*time.Second, 10*time.Second, 5*time.Second)
 	b.AddOutput(301*time.Second, os.Stdout, output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./output.txt"), output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./error.txt"), output.WriteErrorLogs)
@@ -32,8 +32,8 @@ func main() {
 
 // GrpcRequest is executed by benchmarks
 func GrpcRequest() error {
-	client := proto.NewKittensClient(conn)
-	_, err := client.Hello(context.TODO(), &proto.Request{Name: "Nic"})
+	client := kittens.NewKittensClient(conn)
+	_, err := client.Hello(context.TODO(), &kittens.Request{Name: "Nic"})
 
 	if err != nil {
 		return err

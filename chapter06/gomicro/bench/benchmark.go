@@ -7,8 +7,7 @@ import (
 	"time"
 
 	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
-	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/client/rpc"
+	"go-micro.dev/v4/client"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
