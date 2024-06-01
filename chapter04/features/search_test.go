@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"syscall"
+	"testing"
 	"time"
 
 	"github.com/cucumber/godog"
@@ -62,25 +62,25 @@ func iShouldReceiveAListOfKittens() error {
 	return nil
 }
 
-func FeatureContext(s *godog.ScenarioContext) {
-	s.Step(`^I have no search criteria$`, iHaveNoSearchCriteria)
-	s.Step(`^I call the search endpoint$`, iCallTheSearchEndpoint)
-	s.Step(`^I should receive a bad request message$`, iShouldReceiveABadRequestMessage)
-	s.Step(`^I have a valid search criteria$`, iHaveAValidSearchCriteria)
-	s.Step(`^I should receive a list of kittens$`, iShouldReceiveAListOfKittens)
+// func FeatureContext(s *godog.ScenarioContext) {
+// 	s.Step(`^I have no search criteria$`, iHaveNoSearchCriteria)
+// 	s.Step(`^I call the search endpoint$`, iCallTheSearchEndpoint)
+// 	s.Step(`^I should receive a bad request message$`, iShouldReceiveABadRequestMessage)
+// 	s.Step(`^I have a valid search criteria$`, iHaveAValidSearchCriteria)
+// 	s.Step(`^I should receive a list of kittens$`, iShouldReceiveAListOfKittens)
 
-	s.Before(func(interface{}) {
-		clearDB()
-		setupData()
-		startServer()
-	})
+// s.Before(func(interface{}) {
+// 	clearDB()
+// 	setupData()
+// 	startServer()
+// })
 
-	s.After(func(interface{}, error) {
-		server.Process.Signal(syscall.SIGINT)
-	})
+// s.After(func(interface{}, error) {
+// 	server.Process.Signal(syscall.SIGINT)
+// })
 
-	waitForDB()
-}
+// 	waitForDB()
+// }
 
 var server *exec.Cmd
 var store *data.MongoStore
@@ -137,4 +137,27 @@ func setupData() {
 				Weight: 35.0,
 			},
 		})
+}
+
+func TestSearchFeatures(t *testing.T) {
+	suite := godog.TestSuite{
+		ScenarioInitializer: InitializeScenario,
+		Options: &godog.Options{
+			Format:   "pretty",
+			Paths:    []string{"features"},
+			TestingT: t, // Testing instance that will run subtests.
+		},
+	}
+
+	if suite.Run() != 0 {
+		t.Fatal("non-zero status returned, failed to run feature tests")
+	}
+}
+
+func InitializeScenario(ctx *godog.ScenarioContext) {
+	ctx.Step(`^I have no search criteria$`, iHaveNoSearchCriteria)
+	ctx.Step(`^I call the search endpoint$`, iCallTheSearchEndpoint)
+	ctx.Step(`^I should receive a bad request message$`, iShouldReceiveABadRequestMessage)
+	ctx.Step(`^I have a valid search criteria$`, iHaveAValidSearchCriteria)
+	ctx.Step(`^I should receive a list of kittens$`, iShouldReceiveAListOfKittens)
 }
