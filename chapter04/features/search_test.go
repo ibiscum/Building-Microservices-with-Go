@@ -2,6 +2,7 @@ package features
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -121,17 +122,17 @@ func clearDB() {
 func setupData() {
 	store.InsertKittens(
 		[]data.Kitten{
-			data.Kitten{
+			{
 				Id:     "1",
 				Name:   "Felix",
 				Weight: 12.3,
 			},
-			data.Kitten{
+			{
 				Id:     "2",
 				Name:   "Fat Freddy's Cat",
 				Weight: 20.0,
 			},
-			data.Kitten{
+			{
 				Id:     "3",
 				Name:   "Garfield",
 				Weight: 35.0,
@@ -144,7 +145,7 @@ func TestSearchFeatures(t *testing.T) {
 		ScenarioInitializer: InitializeScenario,
 		Options: &godog.Options{
 			Format:   "pretty",
-			Paths:    []string{"features"},
+			Paths:    []string{"./"},
 			TestingT: t, // Testing instance that will run subtests.
 		},
 	}
@@ -160,4 +161,17 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I should receive a bad request message$`, iShouldReceiveABadRequestMessage)
 	ctx.Step(`^I have a valid search criteria$`, iHaveAValidSearchCriteria)
 	ctx.Step(`^I should receive a list of kittens$`, iShouldReceiveAListOfKittens)
+
+	ctx.Before(func(ctx context.Context, sc *godog.Scenario) (context.Context, error) {
+		clearDB()
+		setupData()
+		startServer()
+		return ctx, nil
+	})
+
+	//ctx.After(func(ctx context.Context, sc *godog.Scenario) (context.Context, error) {
+	// 	server.Process.Signal(syscall.SIGINT)
+	//})
+
+	waitForDB()
 }

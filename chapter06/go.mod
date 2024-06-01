@@ -11,13 +11,30 @@ require (
 )
 
 require (
+	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/gorilla/mux v1.8.1 // indirect
+	github.com/gorilla/websocket v1.5.1 // indirect
+	github.com/igm/sockjs-go v3.0.3+incompatible // indirect
+	github.com/juju/ratelimit v1.0.2 // indirect
+	github.com/koding/cache v0.0.0-20161222233015-e8a81b0b3f20 // indirect
+	github.com/koding/logging v0.0.0-20160720134017-8b5a689ed69b // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
+	golang.org/x/crypto v0.22.0 // indirect
+	golang.org/x/term v0.19.0 // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 // indirect
+)
+
+require (
 	github.com/blend/go-sdk v1.20220411.3 // indirect
-	github.com/fatih/color v1.7.0 // indirect
+	github.com/fatih/color v1.13.0 // indirect
+	github.com/go-kit/kit v0.13.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/koding/kite v0.0.0-20180710021347-baa1a54919e3
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
 	golang.org/x/image v0.10.0 // indirect
