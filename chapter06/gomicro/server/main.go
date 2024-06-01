@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"flag"
+	"log"
 
-	log "github.com/golang/glog"
 	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
 	"go-micro.dev/v4/server"
 	"go-micro.dev/v4/util/cmd"
