@@ -6,7 +6,6 @@ use (
 	./chapter03
 	./chapter04
 	./chapter05
-	./chapter06
 	./chapter06/gokit
 	./chapter06/gomicro
 	./chapter06/grpc
