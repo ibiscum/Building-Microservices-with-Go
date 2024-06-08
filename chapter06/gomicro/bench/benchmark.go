@@ -8,10 +8,10 @@ import (
 	"time"
 
 	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
-	"go-micro.dev/v4/client"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
+	"go-micro.dev/v4/client"
 )
 
 var c client.Client
@@ -34,12 +34,8 @@ func GoMicroRequest() error {
 	request := c.NewRequest("bmigo.micro.Kittens", "Kittens.Hello", &kittens.Request{Name: "Nic"})
 	response := &kittens.Response{}
 
-	err := c.CallRemote(
-		context.TODO(),
-		"consul.acet.io:8091",
-		request,
-		response)
-
+	// err := c.Call(context.TODO(), request, response, "consul.acet.io:8091",
+	err := c.Call(context.TODO(), request, response)
 	if err != nil {
 		return err
 	}

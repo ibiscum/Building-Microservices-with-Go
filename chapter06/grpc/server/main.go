@@ -30,5 +30,8 @@ func main() {
 	}
 	grpcServer := grpc.NewServer()
 	kittens.RegisterKittensServer(grpcServer, &kittenServer{})
-	grpcServer.Serve(lis)
+	err = grpcServer.Serve(lis)
+	if err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }

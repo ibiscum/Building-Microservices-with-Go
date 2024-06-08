@@ -17,7 +17,7 @@ import (
 var conn *grpc.ClientConn
 
 func main() {
-	conn, _ = grpc.Dial("consul.acet.io:9000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, _ = grpc.NewClient("consul.acet.io:9000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	defer conn.Close()
 
 	fmt.Println("Benchmarking application")

@@ -32,7 +32,7 @@ var rootTemplate = x509.Certificate{
 		x509.KeyUsageCertSign |
 		x509.KeyUsageCRLSign,
 	BasicConstraintsValid: true,
-	IsCA: true,
+	IsCA:                  true,
 }
 
 var applicationTemplate = x509.Certificate{
@@ -48,7 +48,7 @@ var applicationTemplate = x509.Certificate{
 		x509.KeyUsageCertSign |
 		x509.KeyUsageCRLSign,
 	BasicConstraintsValid: true,
-	IsCA: true,
+	IsCA:                  true,
 }
 
 var instanceTemplate = x509.Certificate{
@@ -207,7 +207,10 @@ func savePrivateKey(key *rsa.PrivateKey, path string, password []byte) error {
 		return fmt.Errorf("failed to open key.pem for writing: %v", err)
 	}
 
-	pem.Encode(keyOut, block)
+	err = pem.Encode(keyOut, block)
+	if err != nil {
+		log.Fatal(err)
+	}
 	keyOut.Close()
 
 	return nil
@@ -220,7 +223,10 @@ func saveX509Certificate(data []byte, path string) error {
 	}
 
 	block := &pem.Block{Type: "CERTIFICATE", Bytes: data}
-	pem.Encode(file, block)
+	err = pem.Encode(file, block)
+	if err != nil {
+		log.Fatal(err)
+	}
 	file.Close()
 
 	return nil

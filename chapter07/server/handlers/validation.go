@@ -43,7 +43,10 @@ func (h *validationHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c := context.WithValue(r.Context(), "name", request.Name)
+	type contextKey string
+	const contextKeyRequestID contextKey = "name"
+
+	c := context.WithValue(r.Context(), contextKeyRequestID, request.Name)
 	r = r.WithContext(c)
 
 	h.statsd.Increment(validationSuccess)
