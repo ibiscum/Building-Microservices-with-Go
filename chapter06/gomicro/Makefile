@@ -14,3 +14,5 @@ protoc:
 	echo "Generating protobuf code"
 	docker run -v $(shell pwd)/proto:/proto nicholasjackson/building-microservices-in-go bash -c 'protoc -I /proto --go_out=. /proto/kittens.proto'
 	docker run -v $(shell pwd)/proto:/proto nicholasjackson/building-microservices-in-go bash -c 'protoc -I /proto --ruby_out=/proto /proto/kittens.proto'
+lint:
+	go list -f '{{.Dir}}/...' -m | xargs golangci-lint run

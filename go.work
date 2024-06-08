@@ -7,6 +7,11 @@ use (
 	./chapter04
 	./chapter05
 	./chapter06
+	./chapter06/gokit
+	./chapter06/gomicro
+	./chapter06/grpc
+	./chapter06/kite
+	./chapter06/vanilla_http
 	./chapter07
 	./chapter08
 	./chapter09
