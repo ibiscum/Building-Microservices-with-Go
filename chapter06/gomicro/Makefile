@@ -6,7 +6,7 @@ buildserver:
 	CGO_ENABLED=0 GOOS=linux go build -o ./server/kittenserver ./server/main.go
 runserver: buildserver
 	echo "Run API"
-	docker-compose -p kittenserver -f ./docker-compose.yml up --build
+	docker compose -p kittenserver -f ./docker-compose.yml up --build
 runclient:
 	echo "Running client code"
 	docker run --network kittenserver_default -it --rm -v $(shell pwd):/src -w /src nicholasjackson/building-microservices-in-go bash -c  'ruby ./client/client.rb'

@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"net/rpc"
 	"os"
 	"time"
 
@@ -11,6 +10,7 @@ import (
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
+	"go-micro.dev/v4"
 	"go-micro.dev/v4/client"
 )
 
@@ -19,7 +19,9 @@ var c client.Client
 func main() {
 	fmt.Println("Benchmarking application")
 
-	c = rpc.NewClient(client.PoolSize(256))
+	service := micro.NewService()
+	service.Init()
+
 	b := bench.New(true, 400, 300*time.Second, 90*time.Second, 5*time.Second)
 	b.AddOutput(0*time.Second, os.Stdout, output.WriteTabularData)
 	b.AddOutput(1*time.Second, util.NewFile("./output.txt"), output.WriteTabularData)
@@ -31,6 +33,7 @@ func main() {
 // GoMicroRequest is executed by benchmarks
 func GoMicroRequest() error {
 
+	// Create new request to service go.micro.srv.example, method Example.Call
 	request := c.NewRequest("bmigo.micro.Kittens", "Kittens.Hello", &kittens.Request{Name: "Nic"})
 	response := &kittens.Response{}
 

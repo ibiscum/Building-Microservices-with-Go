@@ -18,7 +18,7 @@ MESSAGE_SIZE_BYTES = 4
 # body: the response returned from the http client
 # message_class: the class type expected to be returned in the response
 def read_response(body, message_class)
-  envelope, envelope_size = read_envelope(body) 
+  envelope, envelope_size = read_envelope(body)
 
   start_pos = MESSAGE_SIZE_BYTES + envelope_size
   message = read_message(start_pos, body, message_class)
@@ -29,9 +29,9 @@ end
 # reads the message envelope and returns a ResponseEnvelope
 def read_envelope(body)
 
-  end_pos = MESSAGE_SIZE_BYTES - 1 
+  end_pos = MESSAGE_SIZE_BYTES - 1
   message_len = body[0..end_pos].unpack('N*')[0]
-  
+
   end_pos = end_pos + message_len
   resp = body[MESSAGE_SIZE_BYTES..end_pos]
 
@@ -43,11 +43,11 @@ def read_message(start_pos, body, message_class)
 
   end_pos = start_pos + MESSAGE_SIZE_BYTES
   message_len = body[start_pos..end_pos].unpack('N*')[0]
- 
+
   start_pos = end_pos
   end_pos = start_pos + message_len
   message = body[start_pos..end_pos]
-  
+
   message_class.decode(message)
 end
 
@@ -66,7 +66,7 @@ def send_request(server, port, method, request)
   envelope = RequestEnvelope.new(service_method: method, seq: 2)
   encoded_envelope = RequestEnvelope.encode(envelope)
   # Message size is encoded into 4 bytes as an unsigned integer
-  envelope_size = Array(encoded_envelope.length).pack('N*') 
+  envelope_size = Array(encoded_envelope.length).pack('N*')
 
   # Create message
   encoded_message = request.class.encode(request)
@@ -84,10 +84,12 @@ def main()
   puts "Connecting to Kittenserver"
 
   request = Bmigo::Micro::Request.new(name: 'Nic')
-  body = send_request('kittenserver_kittenserver_1', '8091', 'Kittens.Hello', request).body
-  envelope, message = read_response(body, Bmigo::Micro::Response)    
-  
-  puts envelope.inspect 
+  # body = send_request('kittenserver_kittenserver_1', '8091', 'Kittens.Hello', request).body
+
+  body = send_request('localhost', '8091', 'Kittens.Hello', request).body
+  envelope, message = read_response(body, Bmigo::Micro::Response)
+
+  puts envelope.inspect
   puts message.inspect
 end
 
