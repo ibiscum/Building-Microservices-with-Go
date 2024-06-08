@@ -4,19 +4,16 @@ import (
 	"crypto/rsa"
 	"encoding/json"
 	"net/http"
-	"time"
 
 	validator "github.com/go-playground/validator"
 
 	"github.com/DataDog/datadog-go/statsd"
-	"github.com/SermoDigital/jose/crypto"
-	"github.com/SermoDigital/jose/jws"
 	bogcrypto "github.com/ibiscum/Building-Microservices-with-Go/crypto"
 
 	log "github.com/sirupsen/logrus"
 )
 
-const oneDay time.Duration = (1440 * time.Minute)
+// const oneDay time.Duration = (1440 * time.Minute)
 
 var validate = validator.New()
 var defaultFields = log.Fields{
@@ -36,17 +33,38 @@ type JWT struct {
 }
 
 // generateJWT creates a new JWT and signs it with the private key
-func (j *JWT) generateJWT(request LoginRequest) []byte {
-	claims := jws.Claims{}
-	claims.SetExpiration(time.Now().Add(oneDay))
-	claims.Set("userID", request.Username)
-	claims.Set("accessLevel", "user")
+// func (j *JWT) generateJWT(request LoginRequest) []byte {
+func (j *JWT) generateJWT() []byte {
+	// sig, err := jose.NewSigner(jose.SigningKey{Algorithm: jose.RS256, Key: rsaPrivate}, (&jose.SignerOptions{}).WithType("JWT"))
+	// if err != nil {
+	// 	fmt.Printf("making signer: %s\n", err)
 
-	jwt := jws.NewJWT(claims, crypto.SigningMethodRS256)
+	// }
 
-	b, _ := jwt.Serialize(j.rsaPrivate)
+	// cl := jwt.Claims{
+	// 	Subject:   "subject",
+	// 	Issuer:    "issuer",
+	// 	NotBefore: jwt.NewNumericDate(time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC)),
+	// 	Audience:  jwt.Audience{"leela", "fry"},
+	// }
 
-	return b
+	// raw, err := jwt.Signed(sig).Claims(cl).Serialize()
+	// if err != nil {
+	// 	fmt.Printf("signing JWT: %s\n", err)
+	// }
+
+	// claims := jws.Claims{}
+	// claims.SetExpiration(time.Now().Add(2880 * time.Minute))
+	// claims.Set("userID", "abcsd232jfjf")
+	// claims.Set("accessLevel", "user")
+
+	// jwt := jws.NewJWT(claims, crypto.SigningMethodRS256)
+
+	// b, _ := jwt.Serialize(rsaPrivate)
+
+	var raw string = "N/A"
+
+	return []byte(raw)
 }
 
 func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
@@ -78,7 +96,8 @@ func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	j.logger.WithFields(defaultFields).Infof("Login request from %s", request.Username)
-	jwt := j.generateJWT(request)
+	//jwt := j.generateJWT(request)
+	jwt := j.generateJWT()
 
 	j.statsd.Incr("jwt.success", nil, 1)
 

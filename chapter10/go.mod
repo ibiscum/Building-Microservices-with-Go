@@ -10,10 +10,16 @@ require (
 )
 
 require (
+	golang.org/x/crypto v0.24.0 // indirect
+	gopkg.in/go-jose/go-jose.v2 v2.6.3 // indirect
+)
+
+require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
+	github.com/go-jose/go-jose v2.6.3+incompatible
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 )

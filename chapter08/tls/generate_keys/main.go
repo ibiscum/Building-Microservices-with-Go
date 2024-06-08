@@ -71,7 +71,6 @@ func main() {
 		durationDecade,
 		"root_key.pem",
 		"root_cert.pem",
-		"password",
 		nil,
 		nil)
 
@@ -80,7 +79,6 @@ func main() {
 		durationYear,
 		"application_key.pem",
 		"application_cert.pem",
-		"password",
 		rootKey,
 		rootCert)
 
@@ -89,7 +87,6 @@ func main() {
 		durationMonth,
 		"instance_key.pem",
 		"instance_cert.pem",
-		"",
 		applicationKey,
 		applicationCert)
 }
