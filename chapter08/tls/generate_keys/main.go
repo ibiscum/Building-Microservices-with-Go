@@ -99,7 +99,6 @@ func generateKeyAndCertificate(
 	duration time.Duration,
 	keyOutputLocation string,
 	certficateOutputLocation string,
-	password string,
 	parentKey *rsa.PrivateKey,
 	parentCert *x509.Certificate) (*rsa.PrivateKey, *x509.Certificate) {
 
