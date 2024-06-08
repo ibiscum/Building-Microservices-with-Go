@@ -4,17 +4,17 @@ go 1.22.1
 
 require (
 	github.com/nicholasjackson/bench v1.0.2
-	google.golang.org/grpc v1.43.0
+	google.golang.org/grpc v1.56.3
 	google.golang.org/protobuf v1.34.1
 )
 
 require (
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
-	google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa // indirect
+	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 )
 
 require (
