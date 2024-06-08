@@ -104,10 +104,16 @@ func generateKeyAndCertificate(
 	parentCert *x509.Certificate) (*rsa.PrivateKey, *x509.Certificate) {
 
 	priv := generatePrivateKey()
-	savePrivateKey(priv, keyOutputLocation, []byte(password))
+	err := savePrivateKey(priv, keyOutputLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	certData := generateX509Certificate(priv, template, duration, parentKey, parentCert)
-	saveX509Certificate(certData, certficateOutputLocation)
+	err = saveX509Certificate(certData, certficateOutputLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	cert, err := x509.ParseCertificate(certData)
 	if err != nil {
@@ -188,19 +194,21 @@ func getSubjectKey(key *rsa.PrivateKey) ([]byte, error) {
 	return h.Sum(nil), nil
 }
 
-func savePrivateKey(key *rsa.PrivateKey, path string, password []byte) error {
+//func savePrivateKey(key *rsa.PrivateKey, path string, password []byte) error {
+
+func savePrivateKey(key *rsa.PrivateKey, path string) error {
 	b := x509.MarshalPKCS1PrivateKey(key)
 	var block *pem.Block
 	var err error
 
-	if len(password) > 3 {
-		block, err = x509.EncryptPEMBlock(rand.Reader, "RSA PRIVATE KEY", b, password, x509.PEMCipherAES256)
-		if err != nil {
-			return fmt.Errorf("Unable to encrypt key: %s", err)
-		}
-	} else {
-		block = &pem.Block{Type: "RSA PRIVATE KEY", Bytes: b}
-	}
+	// if len(password) > 3 {
+	// 	block, err = x509.EncryptPEMBlock(rand.Reader, "RSA PRIVATE KEY", b, password, x509.PEMCipherAES256)
+	// 	if err != nil {
+	// 		return fmt.Errorf("unable to encrypt key: %s", err)
+	// 	}
+	// } else {
+	block = &pem.Block{Type: "RSA PRIVATE KEY", Bytes: b}
+	//}
 
 	keyOut, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {

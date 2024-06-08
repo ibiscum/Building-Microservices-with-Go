@@ -3,6 +3,7 @@ package hashing
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"testing"
 
 	"golang.org/x/crypto/bcrypt"
@@ -44,7 +45,10 @@ func BenchmarkGenerateHashWithSaltAndPepper(b *testing.B) {
 
 func BenchmarkGenerateBcrypt(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		bcrypt.GenerateFromPassword([]byte(original), bcrypt.DefaultCost)
+		_, err := bcrypt.GenerateFromPassword([]byte(original), bcrypt.DefaultCost)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
@@ -88,7 +92,10 @@ func BenchmarkCompareBCrypt(b *testing.B) {
 	hash, _ := bcrypt.GenerateFromPassword([]byte(original), bcrypt.DefaultCost)
 
 	for i := 0; i < b.N; i++ {
-		bcrypt.CompareHashAndPassword(hash, []byte(original))
+		err := bcrypt.CompareHashAndPassword(hash, []byte(original))
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 

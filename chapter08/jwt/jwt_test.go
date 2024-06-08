@@ -34,7 +34,10 @@ func TestSplitIntoDataAndSignature(t *testing.T) {
 	}
 	defer file.Close()
 
-	file.WriteString(strings.Join(data[:2], "."))
+	_, err = file.WriteString(strings.Join(data[:2], "."))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	file, err = os.OpenFile("signature.txt", os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
@@ -42,7 +45,10 @@ func TestSplitIntoDataAndSignature(t *testing.T) {
 	}
 	defer file.Close()
 
-	file.WriteString(data[2])
+	_, err = file.WriteString(data[2])
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	signature, err := base64.RawURLEncoding.DecodeString(data[2])
 	if err != nil {
@@ -54,6 +60,8 @@ func TestSplitIntoDataAndSignature(t *testing.T) {
 		log.Fatal(err)
 	}
 	defer file2.Close()
-
-	file2.Write(signature)
+	_, err = file2.Write(signature)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
