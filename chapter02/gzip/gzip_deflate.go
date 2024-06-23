@@ -16,7 +16,7 @@ type helloWorldResponse struct {
 }
 
 func main() {
-	port := 8080
+	port := 8001
 
 	http.Handle("/helloworld",
 		NewGzipHandler(http.HandlerFunc(helloWorldHandler)),
@@ -50,7 +50,7 @@ func (h *GZipHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strings.Contains(encodings, "gzip") {
 		h.serveGzipped(w, r)
 	} else if strings.Contains(encodings, "deflate") {
-		panic("Deflate not implemented")
+		log.Panic("Deflate not implemented")
 	} else {
 		h.servePlain(w, r)
 	}
