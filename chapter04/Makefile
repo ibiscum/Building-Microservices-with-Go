@@ -1,7 +1,7 @@
 cucumber:
-	docker-compose up -d
+	docker compose up -d
 	cd features && godog ./
-	docker-compose stop
+	docker compose stop
 
 run:
 	docker-compose up -d
@@ -15,4 +15,4 @@ test: unit cucumber
 
 package:
 	go get -t ./...
-	go get github.com/DATA-DOG/godog/cmd/godog
+	go install github.com/cucumber/godog/cmd/godog@latest
