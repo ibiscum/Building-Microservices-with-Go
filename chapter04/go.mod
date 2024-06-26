@@ -29,7 +29,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
-	golang.org/x/image v0.17.0 // indirect
+	golang.org/x/image v0.18.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect

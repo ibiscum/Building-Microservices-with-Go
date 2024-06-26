@@ -35,6 +35,6 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
-	golang.org/x/image v0.17.0 // indirect
+	golang.org/x/image v0.18.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 )
