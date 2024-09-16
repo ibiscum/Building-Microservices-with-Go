@@ -7,4 +7,4 @@ build_write:
 		CGO_ENABLED=0 GOOS=linux go build -o ./product-write/server ./product-write/. 
 
 run: build_read build_write
-	docker-compose up
+	docker compose up

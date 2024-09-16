@@ -25,7 +25,7 @@ func StartServer() {
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
-		log.Fatalf(fmt.Sprintf("Unable to listen on given port: %s", err))
+		log.Fatalf("Unable to listen on given port: %s", err)
 	}
 	defer l.Close()
 

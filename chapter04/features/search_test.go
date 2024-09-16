@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -54,7 +55,7 @@ func iHaveAValidSearchCriteria() error {
 
 func iShouldReceiveAListOfKittens() error {
 	var body []byte
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 
 	if len(body) < 1 || err != nil {
 		return fmt.Errorf("Should have received a list of kittens")
@@ -88,10 +89,18 @@ var store *data.MongoStore
 
 func startServer() {
 	server = exec.Command("go", "build", "../main.go")
-	server.Run()
+	err := server.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	server = exec.Command("./main")
-	go server.Run()
+	go func() {
+		err := server.Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	time.Sleep(3 * time.Second)
 	fmt.Printf("Server running with pid: %v", server.Process.Pid)

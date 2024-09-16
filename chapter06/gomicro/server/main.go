@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"log"
 
 	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/gomicro/proto"
@@ -18,11 +17,14 @@ func (s *Kittens) Hello(ctx context.Context, req *kittens.Request, rsp *kittens.
 	return nil
 }
 
-var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+// var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 
 func main() {
 
-	cmd.Init()
+	err := cmd.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	server.Init(
 		server.Name("bmigo.micro.Kittens"),
@@ -31,11 +33,14 @@ func main() {
 	)
 
 	// Register Handlers
-	server.Handle(
+	err = server.Handle(
 		server.NewHandler(
 			new(Kittens),
 		),
 	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Run server
 	if err := server.Run(); err != nil {

@@ -15,7 +15,12 @@ func PerformRequest() contract.HelloWorldResponse {
 		"application/json",
 		bytes.NewBuffer([]byte(`{"id": 1, "method": "HelloWorldHandler.HelloWorld", "params": [{"name":"World"}]}`)),
 	)
-	defer r.Body.Close()
+	defer func() {
+		err := r.Body.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	decoder := json.NewDecoder(r.Body)
 	var response contract.HelloWorldResponse

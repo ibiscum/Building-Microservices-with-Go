@@ -5,11 +5,9 @@ import (
 	"os"
 	"time"
 
-	kittens "github.com/ibiscum/Building-Microservices-with-Go/chapter06/grpc/proto/kittens"
 	"github.com/nicholasjackson/bench"
 	"github.com/nicholasjackson/bench/output"
 	"github.com/nicholasjackson/bench/util"
-	context "golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -32,12 +30,12 @@ func main() {
 
 // GrpcRequest is executed by benchmarks
 func GrpcRequest() error {
-	client := kittens.NewKittensClient(conn)
-	_, err := client.Hello(context.TODO(), &kittens.Request{Name: "Nic"})
+	// client := kittens.NewKittensClient(conn)
+	// _, err := client.Hello(context.TODO(), &kittens.Request{Name: "Nic"})
 
-	if err != nil {
-		return err
-	}
+	// if err != nil {
+	// 	return err
+	// }
 
 	return nil
 }
