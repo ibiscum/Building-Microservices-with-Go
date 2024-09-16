@@ -69,7 +69,10 @@ func (j *JWT) generateJWT() []byte {
 
 func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		j.statsd.Incr("jwt.badmethod", nil, 1)
+		err := j.statsd.Incr("jwt.badmethod", nil, 1)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		j.logger.WithFields(defaultFields).Infof("Method: %s, not allowed", r.Method)
 		rw.WriteHeader(http.StatusMethodNotAllowed)
@@ -79,7 +82,10 @@ func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
 	request := LoginRequest{}
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		j.statsd.Incr("jwt.badrequest", nil, 1)
+		err = j.statsd.Incr("jwt.badrequest", nil, 1)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		j.logger.WithFields(defaultFields).Errorf("Error decoding request %v", err)
 		rw.WriteHeader(http.StatusBadRequest)
@@ -88,7 +94,10 @@ func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
 
 	err = validate.Struct(request)
 	if err != nil {
-		j.statsd.Incr("jwt.badrequest", nil, 1)
+		err := j.statsd.Incr("jwt.badrequest", nil, 1)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		j.logger.WithFields(defaultFields).Errorf("Error validating request %s", err.Error())
 		rw.WriteHeader(http.StatusBadRequest)
@@ -99,9 +108,15 @@ func (j *JWT) Handle(rw http.ResponseWriter, r *http.Request) {
 	//jwt := j.generateJWT(request)
 	jwt := j.generateJWT()
 
-	j.statsd.Incr("jwt.success", nil, 1)
+	err = j.statsd.Incr("jwt.success", nil, 1)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	rw.Write(jwt)
+	_, err = rw.Write(jwt)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func NewJWT(logger *log.Logger, statsd *statsd.Client) *JWT {

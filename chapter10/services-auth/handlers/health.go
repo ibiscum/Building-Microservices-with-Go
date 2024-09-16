@@ -15,7 +15,10 @@ type Health struct {
 }
 
 func (h *Health) Handle(rw http.ResponseWriter, r *http.Request) {
-	h.statsd.Incr("health.success", nil, 1)
+	err := h.statsd.Incr("health.success", nil, 1)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Fprintln(rw, "OK")
 }

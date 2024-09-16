@@ -38,7 +38,7 @@ func (h validationHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c := context.WithValue(r.Context(), "name", request.Name)
+	c := context.WithValue(r.Context(), entities.JsonString("name"), request.Name)
 	r = r.WithContext(c)
 
 	h.next.ServeHTTP(rw, r)
@@ -52,8 +52,9 @@ func newHelloWorldHandler() http.Handler {
 }
 
 func (h helloWorldHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	name := r.Context().Value("name").(string)
-	response := entities.HelloWorldResponse{Message: "Hello " + name}
+	name := r.Context().Value("name").(entities.JsonString)
+
+	response := entities.HelloWorldResponse{Message: "Hello " + entities.JsonString(name)}
 
 	encoder := json.NewEncoder(rw)
 	err := encoder.Encode(response)
