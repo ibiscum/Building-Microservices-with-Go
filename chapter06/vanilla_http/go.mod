@@ -4,7 +4,7 @@ go 1.22.1
 
 require github.com/nicholasjackson/bench v1.0.2
 
-require github.com/sergi/go-diff v1.1.0 // indirect
+require github.com/sergi/go-diff v1.3.1 // indirect
 
 require (
 	github.com/blend/go-sdk v1.20220411.3 // indirect
