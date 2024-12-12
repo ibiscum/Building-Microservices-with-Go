@@ -17,8 +17,8 @@ require (
 	github.com/koding/cache v0.0.0-20161222233015-e8a81b0b3f20 // indirect
 	github.com/koding/logging v0.0.0-20160720134017-8b5a689ed69b // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
-	golang.org/x/crypto v0.27.0 // indirect
-	golang.org/x/term v0.24.0 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/term v0.27.0 // indirect
 	gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
@@ -33,5 +33,5 @@ require (
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
 	golang.org/x/image v0.20.0 // indirect
-	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 )
