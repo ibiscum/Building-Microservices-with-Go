@@ -1,6 +1,6 @@
 module github.com/ibiscum/Building-Microservices-with-Go/chapter06/kite
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/koding/kite v0.0.0-20180710021347-baa1a54919e3
@@ -32,6 +32,6 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/wcharczuk/go-chart v2.0.1+incompatible // indirect
-	golang.org/x/image v0.20.0 // indirect
+	golang.org/x/image v0.38.0 // indirect
 	golang.org/x/sys v0.38.0 // indirect
 )
